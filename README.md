@@ -3,7 +3,7 @@ KotlinBukkitKit is an API for Bukkit/SpigotAPI using features Kotlin. DevSrSouza
 
 
 ```kotlin
-implementation("io.github.iredtea:kotlinbukkitkit-architecture:1.0.0")
-implementation("io.github.iredtea:kotlinbukkitkit-extensions:1.0.0")
-implementation("io.github.iredtea:kotlinbukkitkit-serialization:1.0.0")
+implementation("tech.carcadex:kotlinbukkitkit-architecture:1.0.0")
+implementation("tech.carcadex:kotlinbukkitkit-extensions:1.0.0")
+implementation("tech.carcadex:kotlinbukkitkit-serialization:1.0.0")
 ```

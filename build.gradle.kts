@@ -5,7 +5,7 @@ plugins {
     id("io.codearte.nexus-staging") version "0.30.0"
 }
 
-group = "me.redtea"
+group = "tech.carcadex"
 version = "1.0.0"
 
 repositories {
@@ -26,4 +26,10 @@ tasks.test {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
+}
+
+tasks.register("publishAll") {
+    dependsOn(tasks.getByPath("architecture:publish"))
+    dependsOn(tasks.getByPath("extensions:publish"))
+    dependsOn(tasks.getByPath("serialization:publish"))
 }

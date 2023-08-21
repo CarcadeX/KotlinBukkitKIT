@@ -6,7 +6,7 @@ plugins {
     id("signing")
 }
 
-group = "me.redtea"
+group = "tech.carcadex"
 val globalArtifactId = "kotlinbukkitkit-extensions"
 val globalName = "kotlinbukkitkit-extensions"
 
@@ -49,7 +49,7 @@ publishing {
     publications {
         create<MavenPublication>("maven") {
             artifactId = globalArtifactId
-            groupId = "io.github.iredtea"
+            groupId = "tech.carcadex"
             version = version
             from(components["java"])
             versionMapping {
@@ -62,7 +62,7 @@ publishing {
             }
             pom {
                 artifactId = globalArtifactId
-                groupId = "io.github.iredtea"
+                groupId = "tech.carcadex"
                 version = version
                 name.set(globalArtifactId)
                 description.set(globalArtifactId)
