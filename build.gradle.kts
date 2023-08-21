@@ -32,4 +32,6 @@ tasks.register("publishAll") {
     dependsOn(tasks.getByPath("architecture:publish"))
     dependsOn(tasks.getByPath("extensions:publish"))
     dependsOn(tasks.getByPath("serialization:publish"))
+    dependsOn(tasks.getByPath("genref:publish"))
+    dependsOn(tasks.getByPath("messages:publish"))
 }
