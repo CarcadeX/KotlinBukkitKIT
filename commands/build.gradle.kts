@@ -1,36 +1,27 @@
 plugins {
     id("java")
     kotlin("jvm")
+    id("com.github.johnrengelman.shadow") version "7.1.2"
     id("maven-publish")
     id("signing")
 }
 
 group = "tech.carcadex"
-val globalArtifactId = "kotlinbukkitkit-messages"
-val globalName = "kotlinbukkitkit-messages"
+val globalArtifactId = "kotlinbukkitkit-commands"
+val globalName = "kotlinbukkitkit-commands"
 
 repositories {
     mavenCentral()
     maven {
-        name = "papermc-repo"
-        url = uri("https://repo.papermc.io/repository/maven-public/")
+        name = "spigotmc-repo"
+        url = uri("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
     }
 }
 
 dependencies {
-    compileOnly("com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT")
-
-    compileOnly("org.projectlombok:lombok:1.18.26")
-    annotationProcessor("org.projectlombok:lombok:1.18.26")
-
-    compileOnly("dev.triumphteam:triumph-gui:3.1.2")
-
-    compileOnly("com.github.cryptomorin:XSeries:9.2.0") //add to libs
-    compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1")
-
-    implementation("net.kyori:adventure-api:4.14.0")
-    implementation("net.kyori:adventure-platform-bukkit:4.3.0")
-    implementation(files(parent!!.files("messages/libs/MiniMessages.jar"))) //using universal minimessages,
+    compileOnly("org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT")
+    compileOnly(project(":extensions"))
+    implementation(kotlin("reflect"))
 }
 
 tasks.test {
@@ -120,4 +111,13 @@ publishing {
 signing {
     useGpgCmd()
     sign(publishing.publications.getByName("maven"))
+}
+
+tasks.shadowJar {
+    dependencies {
+        exclude {
+            it.moduleGroup.startsWith("org.jetbrains")
+        }
+    }
+
 }

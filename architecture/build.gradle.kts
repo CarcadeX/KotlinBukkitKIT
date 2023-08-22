@@ -65,12 +65,12 @@ publishing {
                 version = version
                 name.set(globalArtifactId)
                 description.set(globalArtifactId)
-                url.set("https://github.com/iRedTea/CarcadeX")
+                url.set("https://github.com/CarcadeX/KotlinBukkitKit")
 
                 licenses {
                     license {
-                        name.set("GNU General Public License v3.0")
-                        url.set("https://www.gnu.org/licenses/gpl-3.0.en.html")
+                        name.set("MIT")
+                        url.set("https://mit-license.org/")
                     }
                 }
                 developers {
@@ -83,7 +83,7 @@ publishing {
                 scm {
                     connection.set("scm:https://github.com/CarcadeX/$globalName.git")
                     developerConnection.set("git@github.com:CarcadeX/$globalName.git")
-                    url.set("https://github.com/iRedTea/CarcadeX")
+                    url.set("https://github.com/CarcadeX/KotlinBukkitKit")
                 }
             }
 

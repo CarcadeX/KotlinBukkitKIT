@@ -8,10 +8,12 @@ Thanks DevSrSouza for KotlinBukkitAPI
 
 package tech.carcadex.kotlinbukkitkit.extensions
 
+import org.bukkit.Bukkit
 import org.bukkit.Effect
 import org.bukkit.Instrument
 import org.bukkit.Material
 import org.bukkit.Note
+import org.bukkit.OfflinePlayer
 import org.bukkit.Sound
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
@@ -42,3 +44,4 @@ public fun Player.resetWalkSpeed() {
 public fun Player.resetFlySpeed() {
     flySpeed = 0.1f
 }
+

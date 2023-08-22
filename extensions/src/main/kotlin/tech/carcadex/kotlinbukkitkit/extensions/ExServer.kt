@@ -7,10 +7,7 @@ Thanks DevSrSouza for KotlinBukkitAPI
  */
 package tech.carcadex.kotlinbukkitkit.extensions
 
-import org.bukkit.GameMode
-import org.bukkit.OfflinePlayer
-import org.bukkit.World
-import org.bukkit.WorldCreator
+import org.bukkit.*
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.Recipe
@@ -26,6 +23,15 @@ public val isPrimaryThread: Boolean get() = server.isPrimaryThread
 
 public fun offlinePlayer(uuid: UUID): OfflinePlayer = server.getOfflinePlayer(uuid)
 public fun offlinePlayer(name: String): OfflinePlayer = server.getOfflinePlayer(name)
+public fun offlinePlayerOrNull(name: String, ignoreCase: Boolean = false): OfflinePlayer? {
+    val onlinePlayer = Bukkit.getPlayer(name)
+    if(onlinePlayer != null) return onlinePlayer
+
+    for(player in Bukkit.getOfflinePlayers()) {
+        if(player.name.equals(name, ignoreCase = ignoreCase)) return player
+    }
+    return null
+}
 
 public fun player(uuid: UUID): Player? = server.getPlayer(uuid)
 public fun player(name: String): Player? = server.getPlayer(name)
