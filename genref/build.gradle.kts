@@ -3,7 +3,7 @@ plugins {
     kotlin("jvm")
     id("maven-publish")
     id("signing")
-    id("com.google.devtools.ksp") version "1.8.21-1.0.11"
+    id("com.google.devtools.ksp") version "1.9.0-1.0.11"
 }
 
 group = "tech.carcadex"
@@ -21,7 +21,7 @@ repositories {
 dependencies {
     implementation("org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT")
     implementation(project(":architecture"))
-    implementation("com.google.devtools.ksp:symbol-processing-api:1.8.21-1.0.11")
+    implementation("com.google.devtools.ksp:symbol-processing-api:1.9.0-1.0.11")
     implementation("com.squareup:kotlinpoet:1.10.1")
     implementation("com.squareup:kotlinpoet-ksp:1.10.1")
 

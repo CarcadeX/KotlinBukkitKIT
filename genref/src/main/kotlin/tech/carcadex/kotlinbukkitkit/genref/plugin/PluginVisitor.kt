@@ -5,6 +5,7 @@ import com.google.devtools.ksp.getAnnotationsByType
 import com.google.devtools.ksp.processing.CodeGenerator
 import com.google.devtools.ksp.processing.Dependencies
 import com.google.devtools.ksp.processing.KSPLogger
+import com.google.devtools.ksp.processing.Resolver
 import com.google.devtools.ksp.symbol.KSFile
 import com.google.devtools.ksp.symbol.KSFunctionDeclaration
 import com.google.devtools.ksp.symbol.KSVisitorVoid
@@ -14,13 +15,19 @@ import com.squareup.kotlinpoet.ksp.writeTo
 import tech.carcadex.kotlinbukkitkit.genref.plugin.annotations.OnDisable
 import tech.carcadex.kotlinbukkitkit.genref.plugin.annotations.Plugin
 import tech.carcadex.kotlinbukkitkit.architecture.KotlinPlugin
+import java.nio.file.Path
+import java.nio.file.Paths
+import kotlin.io.path.deleteIfExists
+import kotlin.io.path.exists
 
+var writed = false
 @OptIn(KotlinPoetKspPreview::class)
 class PluginVisitor(private val codeGenerator: CodeGenerator,
-                       private val logger: KSPLogger
+                       private val logger: KSPLogger,
+                    private val resolver: Resolver
 ) : KSVisitorVoid() {
 
-    var funcs: MutableList<FunSpec> = mutableListOf()
+    private var funcs: MutableList<FunSpec> = mutableListOf()
 
     override fun visitFile(file: KSFile, data: Unit) {
         file.declarations.filter { it is KSFunctionDeclaration }.forEach { it.accept(this, Unit) }
@@ -56,8 +63,9 @@ class PluginVisitor(private val codeGenerator: CodeGenerator,
             )
         }.build()
 
-        //todo try catch?
-        fileSpec.writeTo(codeGenerator, Dependencies(false))
+        if(writed) return
+        fileSpec.writeTo(codeGenerator, Dependencies(false, *resolver.getAllFiles().toList().toTypedArray()))
+        writed = true
     }
 
     @OptIn(KspExperimental::class)
@@ -65,9 +73,6 @@ class PluginVisitor(private val codeGenerator: CodeGenerator,
         if (function.getAnnotationsByType(OnDisable::class).any()) disable(function)
 
         if(function.getAnnotationsByType(Plugin::class).any()) enable(function)
-
-
-        function.returnType!!.accept(this, Unit)
     }
 
     fun disable(function: KSFunctionDeclaration) {

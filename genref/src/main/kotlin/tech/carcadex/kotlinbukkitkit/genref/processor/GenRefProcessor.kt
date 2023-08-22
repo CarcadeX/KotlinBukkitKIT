@@ -14,16 +14,20 @@ import tech.carcadex.kotlinbukkitkit.genref.plugin.annotations.Plugin
 
 class GenRefProcessor(private val codeGenerator: CodeGenerator,
                       private val logger: KSPLogger) : SymbolProcessor {
+   // private var invoked = false
+
     @OptIn(KspExperimental::class)
     override fun process(resolver: Resolver): List<KSAnnotated> {
-        val files = resolver.getAllFiles().filter { it.declarations.any { it is KSFunctionDeclaration && it.validate()
-                && it.isAnnotationPresent(Plugin::class)} }
+     //  if(invoked) return emptyList()
+        val visitor = PluginVisitor(codeGenerator, logger, resolver)
+        resolver.getAllFiles()
+            .filter { it.validate() }
+            .filter {
+                it.declarations.any { it is KSFunctionDeclaration && it.validate() && it.isAnnotationPresent(Plugin::class) }
+            }.firstOrNull()?.accept(visitor, Unit)
 
-        files.let { files -> files.forEach {
-                it.accept(PluginVisitor(codeGenerator, logger), Unit)
-            }
-        }
-        return files.filter { it.validate() }.toList()
+       // invoked = true
+        return emptyList()
     }
 
 }
