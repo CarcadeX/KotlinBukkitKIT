@@ -10,3 +10,6 @@ implementation("tech.carcadex:kotlinbukkitkit-genref:1.0.0")
 implementation("tech.carcadex:kotlinbukkitkit-messages:1.0.0")
 implementation("tech.carcadex:kotlinbukkitkit-commands:1.0.0")
 ```
+
+
+Documentation will be there: https://red-tea.gitbook.io/kotlinbukkitkit/
