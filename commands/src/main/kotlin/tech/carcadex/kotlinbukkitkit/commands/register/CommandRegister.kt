@@ -9,8 +9,8 @@ class CommandRegister(
     aliases: Array<String>,
     desc: String?,
     usage: String?,
-    private val executor: CommandExecutor,
-    private val tabCompleter: TabCompleter,
+    var executor: CommandExecutor,
+    var tabCompleter: TabCompleter,
     private val pl: Plugin
 ) : Command(aliases[0], desc!!, usage!!, listOf(*aliases)), PluginIdentifiableCommand {
 
@@ -28,17 +28,15 @@ class CommandRegister(
     }
 
     companion object {
-        fun register(plugin: Plugin, executor: CommandExecutor, aliases: Array<String>, desc: String?, usage: String?, tabCompleter: TabCompleter) {
+        fun register(plugin: Plugin, executor: CommandExecutor, aliases: Array<String>,
+                     desc: String?, usage: String?, tabCompleter: TabCompleter): CommandRegister {
             if(aliases.size < 1) throw IllegalArgumentException("Could not found name")
-            try {
-                val reg = CommandRegister(aliases, desc, usage, executor, tabCompleter, plugin)
-                val field = Bukkit.getServer().javaClass.getDeclaredField("commandMap")
-                field.isAccessible = true
-                val map = field[Bukkit.getServer()] as CommandMap
-                map.register(plugin.description.name, reg)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+            val reg = CommandRegister(aliases, desc, usage, executor, tabCompleter, plugin)
+            val field = Bukkit.getServer().javaClass.getDeclaredField("commandMap")
+            field.isAccessible = true
+            val map = field[Bukkit.getServer()] as CommandMap
+            map.register(plugin.description.name, reg)
+            return reg
         }
     }
 

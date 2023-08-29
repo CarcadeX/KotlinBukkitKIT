@@ -28,6 +28,12 @@ object TabCompleteService {
         return createTabCompleter(complete)
     }
 
+    fun completer(list: List<String>): TabCompleter {
+        return createTabCompleter(parseTags(list))
+    }
+
+    fun parseTags(list: List<String>): List<(CommandSender) -> List<String>> = list.map { defaultCompleteParse(it) }
+
     private fun createTabCompleter(completes: List<(CommandSender) -> List<String>>): TabCompleter =
         TabCompleter { sender, _, _, args ->
             if(args.size <= completes.size)
