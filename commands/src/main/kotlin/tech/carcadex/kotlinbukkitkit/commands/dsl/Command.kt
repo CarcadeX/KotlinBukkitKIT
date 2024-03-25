@@ -35,7 +35,7 @@ interface Command {
 
 
     fun hasNotPermission(sender: CommandSender): Boolean =
-        context.permission != "" && !sender.hasPermission(context.permission).also {
+        context.permission != "" && (!sender.hasPermission(context.permission)).also {
             if(it) MessagesService.byTag("#no-perm")(sender)
         }
 
