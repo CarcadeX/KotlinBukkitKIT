@@ -44,3 +44,5 @@ bin/
 
 protected
 .idea
+secret/gradle.properties
+secret/secret.txt

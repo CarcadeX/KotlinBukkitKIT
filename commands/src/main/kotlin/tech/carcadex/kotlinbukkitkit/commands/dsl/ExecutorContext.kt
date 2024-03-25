@@ -36,19 +36,19 @@ class ExecutorContext(var sender: CommandSender, val args: Array<String>) {
             MessagesService.byTag("#no-such-material")(sender)
             throw TypeParseException()
         }
-    fun worldOrNull(index: Int): World? = Bukkit.getWorld(string(index))
+    fun worldOrNull(index: Int): World? = Bukkit.getWorld(argument(index) ?: "")
     fun world(index: Int): World =
         worldOrNull(index) ?: run {
             MessagesService.byTag("#no-such-world")(sender)
             throw TypeParseException()
         }
 
-    fun playerOrNull(index: Int): Player? = Bukkit.getPlayer(string(index))
+    fun playerOrNull(index: Int): Player? = Bukkit.getPlayer(argument(index) ?: "")
     fun player(index: Int): World =
         worldOrNull(index) ?: run {
             MessagesService.byTag("#no-such-player")(sender)
             throw TypeParseException()
         }
 
-    fun offlinePlayer(index: Int): OfflinePlayer = Bukkit.getOfflinePlayer(string(index))
+    fun offlinePlayer(index: Int): OfflinePlayer = Bukkit.getOfflinePlayer(argument(index) ?: "")
 }
