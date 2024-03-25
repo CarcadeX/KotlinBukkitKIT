@@ -1,5 +1,5 @@
 
-rootProject.name = "kotlinbukkitkit"
+rootProject.name = "KotlinBukkitKit"
 include("architecture")
 include("messages")
 include("extensions")
