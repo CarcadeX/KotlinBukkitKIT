@@ -11,7 +11,6 @@ object MessagesService {
         messages["#no-such-player"] = { it.sendMessage("${ChatColor.RED}No such player was found") }
         messages["#no-such-world"] = { it.sendMessage("${ChatColor.RED}No such world was found") }
         messages["#no-such-material"] = { it.sendMessage("${ChatColor.RED}No such material was found") }
-        messages["#no-such-world"] = { it.sendMessage("${ChatColor.RED}No such world was found") }
         messages["#no-such-enum"] = { it.sendMessage("${ChatColor.RED}No such value for this enum was found") }
         messages["#not-a-number"] = { it.sendMessage("${ChatColor.RED}It is not a number") }
         messages["#wrong-usage"] = { it.sendMessage("${ChatColor.RED}Wrong usage of command") }
