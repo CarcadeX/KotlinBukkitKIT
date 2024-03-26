@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "tech.carcadex"
-version = "1.0.0.1"
+version = "1.0.0.2"
 
 repositories {
     mavenCentral()
