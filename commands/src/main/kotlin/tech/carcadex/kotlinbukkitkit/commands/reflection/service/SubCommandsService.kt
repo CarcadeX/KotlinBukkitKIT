@@ -2,6 +2,7 @@ package tech.carcadex.kotlinbukkitkit.commands.reflection.service
 
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabCompleter
+import tech.carcadex.kotlinbukkitkit.commands.exceptions.NotPlayerException
 import tech.carcadex.kotlinbukkitkit.commands.service.MessagesService
 import tech.carcadex.kotlinbukkitkit.commands.service.TabCompleteService
 import tech.carcadex.kotlinbukkitkit.commands.reflection.CommandParams
@@ -76,6 +77,8 @@ object SubCommandsService {
                     func.callBy(Parser.paramMap(context, argsFromExecutor, argsSize, sender, argsParsers, func, true, rootCommand))
                     true
                 } catch (ignored: TypeParseException) {
+                    false
+                } catch (ignored: NotPlayerException) {
                     false
                 } catch (e: IllegalArgumentException) {
                     MessagesService.byTag("#wrong-usage")(sender)

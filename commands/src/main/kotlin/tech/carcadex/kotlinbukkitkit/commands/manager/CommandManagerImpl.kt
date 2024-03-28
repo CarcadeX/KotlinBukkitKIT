@@ -4,6 +4,7 @@ import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabCompleter
 import org.bukkit.plugin.Plugin
+import tech.carcadex.kotlinbukkitkit.commands.exceptions.NotPlayerException
 import tech.carcadex.kotlinbukkitkit.commands.reflection.CommandParams
 import tech.carcadex.kotlinbukkitkit.commands.reflection.Parser
 import tech.carcadex.kotlinbukkitkit.commands.reflection.Parser.paramsFromAnnotations
@@ -96,6 +97,7 @@ class CommandManagerImpl(private val plugin: Plugin) : CommandManager {
 
                     )
                 } catch (ignored: TypeParseException) {
+                } catch (ignored: NotPlayerException) {
                 } catch (e: IllegalArgumentException) {
                     MessagesService.byTag("#wrong-usage")(sender)
                 }
