@@ -1,4 +1,4 @@
-# KotlinBukkitKit
+# KotlinBukkitKIT
 KotlinBukkitKit is an API for Bukkit/SpigotAPI using features Kotlin. 
 Thanks for DevSrSouza / KotlinBukkitAPI.
 
@@ -22,7 +22,7 @@ Documentation will be there: https://red-tea.gitbook.io/kotlinbukkitkit/
 
 <img src="https://github.com/DevSrSouza/KotlinBukkitAPI/raw/master/icon.png?size=96" alt="KotlinBukkitAPI" title="KotlinBukkitAPI" align="right"/>
 
-## KotlinBukkitKit
+## KotlinBukkitKIT
 
 ![Kotlin version](https://img.shields.io/static/v1?label=Kotlin&message=1.9.23&color=Orange&style=for-the-badge)
 [![GitHub stars](https://img.shields.io/github/stars/CarcadeX/KotlinBukkitKit.svg?style=for-the-badge&color=orange&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAADYklEQVR4XuWbvbPNQBiHn9uo6NFT0GEYHa0/QofOR2MojI8xxmh8VFwVf4RaxTB0KOhdPRUF8zPJmdy1J3l3N9ndxDb3zr0n2exzfu/zJjk5G5Qdh5vp35c6jI1SEzfzbgK/gXOljqMkgF3A1wbAXuBHCQglAehdf9wsWr8rDdlHSQCq+0MdBxzJvnqgFADJ752zYAHILsNSABT3Mw4A/S27DEsAaOW30wHwHcguwxIAuvJzyz67DEsA6MrPBaD/ZZVhbgA++bkQssowNwCf/FwAWWWYE8A6+bkAssowJ4A++RWTYU4AffIrJsNcACzyKyLDXAAs8isiwxwArPIrIsMcAELkl12GOQCEyC+7DAUgpj5LXLpPMeemAOwAXgLHp5ih4n2+Ak62JbCnuRmhn//D2ALUmre6DlAClAQlYsnjJ3ACeK1FuhI8CzxZ8uqbu06rG7C+LrBkKf5zpekDsFQp/pUeoBJYjXXnAUuT4kp6bnn3nQgtRYrbpBcCQK9dghR7b7RaToXnLMXB22sWAHOVold6oSXQvn5uUlwrvVgA2m4uUuyVXgqAuUgx6NMliwN8t6rcDzZrOXselF5qArR9rVI0SW8MANpHbVI0S28sADVJMUh6YwKoRYpB0hsbwEHgQ2ED6hg+xR5DTBfoznUDuB47+Ujb6Rhuxu4rFcBH4EDs5CNtp3dfKYgaKQBqiH+76OgySAFQQ/xbANFlkAKghvi3AKLLIBZATfFPKoNYADXFP6kMYgHUFP+kMogBUGP8o8sgBsBY8f8MXGqO/D6wP6qRb98ouBvEAEiNvx6DuwU8BH41x69L7AvANUBPlMSO4G4QCiAl/vpqzDPgKvBtzQp3A3eB0wmP8gedFIUCiI3/G+A88Nb41h4DHgFHja93r0/M1wahAELjr3f6CvC8+W5QyHp0bEqCEqFkWEdQGYQACIm/blI8AG4DqvmUISfIDXKE9dkFcxmEALDG/wVwEfiSsmrPtvsaqKcM+zV3gxAAQ/Fv25oATDkEYKhtmsvACqAv/r62NiUA7dvSNk1lYAXgi7+lrU0Noq9tmsrACsCNf2hbmxqEr22aysACoBv/lLY2NQRf2xwsAwsARUlnb2O1talBdNvmnaEbphYA94CnE7S1qUGobeozzMt9E/0BUX274HXoySkAAAAASUVORK5CYII=)](https://github.com/DevSrSouza/KotlinBukkitAPI/stargazers)
@@ -94,4 +94,4 @@ val encbook = metadataItem<EnchantmentStorageMeta>(Material.ENCHANTED_BOOK) {
 ## IDEA Plugin - project wizard
 
 You can find it on a <a href="https://plugins.jetbrains.com/plugin/24043-kotlinbukkitkit-tooling">official plugin page</a>
-![https://files.gitbook.com/v0/b/gitbook-x-prod.appspot.com/o/spaces%2F1PBqxCHnbDKJwzj8IhJk%2Fuploads%2Fo2jPveKWzw47uGTxMm2Q%2Fimage.png?alt=media&token=403c70a1-fa12-435d-99c2-aab79493de97](img.png)
+<img src="https://red-tea.gitbook.io/~gitbook/image?url=https:%2F%2F630270463-files.gitbook.io%2F%7E%2Ffiles%2Fv0%2Fb%2Fgitbook-x-prod.appspot.com%2Fo%2Fspaces%252F1PBqxCHnbDKJwzj8IhJk%252Fuploads%252Fo2jPveKWzw47uGTxMm2Q%252Fimage.png%3Falt=media%26token=403c70a1-fa12-435d-99c2-aab79493de97&width=768&dpr=4&quality=100&sign=5ca18a6e18c88ceb0b5a355577cfb45cadea88b46003ac032ac4f52d7cfe52b0">
