@@ -1,4 +1,4 @@
-# KotlinBukkitKit
+# KotlinBukkitKIT
 KotlinBukkitKit is an API for Bukkit/SpigotAPI using features Kotlin. 
 Thanks for DevSrSouza / KotlinBukkitAPI.
 
