@@ -1,12 +1,12 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.9.0"
+    kotlin("jvm") version "1.9.23"
     id("io.codearte.nexus-staging") version "0.30.0"
 }
 
 group = "tech.carcadex"
-version = "1.0.0.2"
+version = project.findProperty("version").toString()
 
 repositories {
     mavenCentral()
@@ -34,4 +34,9 @@ tasks.register("publishAll") {
     dependsOn(tasks.getByPath("serialization:publish"))
     dependsOn(tasks.getByPath("genref:publish"))
     dependsOn(tasks.getByPath("messages:publish"))
+    dependsOn(tasks.getByPath("commands:publish"))
+    dependsOn(tasks.getByPath("utility:publish"))
+    dependsOn(tasks.getByPath("exposed:publish"))
+    dependsOn(tasks.getByPath("thirdparty:publish"))
+    dependsOn(tasks.getByPath("menu:publish"))
 }

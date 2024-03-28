@@ -38,12 +38,12 @@ public interface Message extends ComponentLike {
     @NotNull
     List<Component> asComponentList();
     /**
-     * Get unparsed value of message
+     * @return unparsed value of message
      */
     @NotNull
     List<String> asUnparsedStringList();
     /**
-     * Get unparsed value of message joined to one string
+     * @return unparsed value of message joined to one string
      */
     @NotNull
     String asUnparsedString(@NotNull String newLine);
