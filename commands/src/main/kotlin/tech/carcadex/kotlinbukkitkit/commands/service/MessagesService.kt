@@ -8,6 +8,7 @@ object MessagesService {
 
     init {
         //REGISTER DEFAULT MESSAGES
+        messages["#for-player-only"] = { it.sendMessage("${ChatColor.RED}This sender is not a player") }
         messages["#no-such-player"] = { it.sendMessage("${ChatColor.RED}No such player was found") }
         messages["#no-such-world"] = { it.sendMessage("${ChatColor.RED}No such world was found") }
         messages["#no-such-material"] = { it.sendMessage("${ChatColor.RED}No such material was found") }
