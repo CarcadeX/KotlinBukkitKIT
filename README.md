@@ -4,16 +4,17 @@ Thanks for DevSrSouza / KotlinBukkitAPI.
 
 
 ```kotlin
-implementation("tech.carcadex:kotlinbukkitkit-architecture:1.0.0.3")
-implementation("tech.carcadex:kotlinbukkitkit-extensions:1.0.0.3")
-implementation("tech.carcadex:kotlinbukkitkit-serialization:1.0.0.3")
-implementation("tech.carcadex:kotlinbukkitkit-messages:1.0.0.3")
-implementation("tech.carcadex:kotlinbukkitkit-commands:1.0.0.3")
-implementation("tech.carcadex:kotlinbukkitkit-utility:1.0.0.3")
-implementation("tech.carcadex:kotlinbukkitkit-exposed:1.0.0.3")
+val kbk_version = "1.0.1.0"
+implementation("tech.carcadex:kotlinbukkitkit-architecture:$version")
+implementation("tech.carcadex:kotlinbukkitkit-extensions:$version")
+implementation("tech.carcadex:kotlinbukkitkit-serialization:$version")
+implementation("tech.carcadex:kotlinbukkitkit-messages:$version")
+implementation("tech.carcadex:kotlinbukkitkit-commands:$version")
+implementation("tech.carcadex:kotlinbukkitkit-utility:$version")
+implementation("tech.carcadex:kotlinbukkitkit-exposed:$version")
 
-compileOnly("tech.carcadex:kotlinbukkitkit-genref:1.0.0.3")
-ksp("tech.carcadex:kotlinbukkitkit-genref:1.0.0.3")
+compileOnly("tech.carcadex:kotlinbukkitkit-genref:$version")
+ksp("tech.carcadex:kotlinbukkitkit-genref:$version")
 ```
 
 
