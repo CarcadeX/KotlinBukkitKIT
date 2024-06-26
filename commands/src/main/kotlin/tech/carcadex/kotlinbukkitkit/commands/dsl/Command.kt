@@ -21,7 +21,7 @@ interface Command {
      * @author itzRedTea
      * @since 1.0.0
      */
-    fun execute(invoker: ExecutorContext)
+    fun execute(context: ExecutorContext)
     /**
      * Invokes when command must be executed
      * @param sender who executes this command
@@ -34,10 +34,7 @@ interface Command {
     fun tabComplete(sender: CommandSender, args: Array<String>): List<String>
 
 
-    fun hasNotPermission(sender: CommandSender): Boolean =
-        context.permission != "" && (!sender.hasPermission(context.permission)).also {
-            if(it) MessagesService.byTag("#no-perm")(sender)
-        }
-
+    fun hasNotPermission(sender: CommandSender): Boolean = context.permission != ""
+            && (!sender.hasPermission(context.permission))
 }
 

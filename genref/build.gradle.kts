@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     id("java")
     kotlin("jvm")
@@ -24,6 +26,7 @@ dependencies {
     implementation("com.google.devtools.ksp:symbol-processing-api:1.9.0-1.0.11")
     implementation("com.squareup:kotlinpoet:1.10.1")
     implementation("com.squareup:kotlinpoet-ksp:1.10.1")
+    implementation(kotlin("stdlib-jdk8"))
 
 }
 tasks.test {
@@ -113,4 +116,12 @@ publishing {
 signing {
     useGpgCmd()
     sign(publishing.publications.getByName("maven"))
+}
+val compileKotlin: KotlinCompile by tasks
+compileKotlin.kotlinOptions {
+    jvmTarget = "1.8"
+}
+val compileTestKotlin: KotlinCompile by tasks
+compileTestKotlin.kotlinOptions {
+    jvmTarget = "1.8"
 }

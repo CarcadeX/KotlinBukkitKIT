@@ -3,9 +3,8 @@ package tech.carcadex.kotlinbukkitkit.commands.service
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabCompleter
-import kotlin.collections.ArrayList
 
-object TabCompleteService {
+class TabCompleteService {
     private val completes = mutableMapOf<String, (CommandSender) -> List<String>>()
     init {
         //REGISTER DEFAULT COMPLETES

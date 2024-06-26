@@ -15,6 +15,8 @@ import com.squareup.kotlinpoet.ksp.writeTo
 import tech.carcadex.kotlinbukkitkit.genref.plugin.annotations.OnDisable
 import tech.carcadex.kotlinbukkitkit.genref.plugin.annotations.Plugin
 import tech.carcadex.kotlinbukkitkit.architecture.KotlinPlugin
+import tech.carcadex.kotlinbukkitkit.genref.plugin.annotations.OnConfigReload
+import tech.carcadex.kotlinbukkitkit.genref.plugin.annotations.OnLoad
 import java.nio.file.Path
 import java.nio.file.Paths
 import kotlin.io.path.deleteIfExists
@@ -71,8 +73,9 @@ class PluginVisitor(private val codeGenerator: CodeGenerator,
     @OptIn(KspExperimental::class)
     override fun visitFunctionDeclaration(function: KSFunctionDeclaration, data: Unit) {
         if (function.getAnnotationsByType(OnDisable::class).any()) disable(function)
-
         if(function.getAnnotationsByType(Plugin::class).any()) enable(function)
+        if(function.getAnnotationsByType(OnConfigReload::class).any()) configReload(function)
+        if(function.getAnnotationsByType(OnLoad::class).any()) load(function)
     }
 
     fun disable(function: KSFunctionDeclaration) {
@@ -98,6 +101,29 @@ class PluginVisitor(private val codeGenerator: CodeGenerator,
             .build())
     }
 
+    fun load(function: KSFunctionDeclaration) {
+        funcs.add(FunSpec.builder("onPluginLoad")
+            .addCode(CodeBlock.of("""
+                            plugin = this
+                            ${function.simpleName.getShortName()}()
+                            
+                        """.trimIndent()))
+            .returns(Unit::class)
+            .addModifiers(KModifier.OVERRIDE)
+            .build())
+    }
+
+    fun configReload(function: KSFunctionDeclaration) {
+        funcs.add(FunSpec.builder("onConfigReload")
+            .addCode(CodeBlock.of("""
+                            plugin = this
+                            ${function.simpleName.getShortName()}()
+                            
+                        """.trimIndent()))
+            .returns(Unit::class)
+            .addModifiers(KModifier.OVERRIDE)
+            .build())
+    }
 
 }
 

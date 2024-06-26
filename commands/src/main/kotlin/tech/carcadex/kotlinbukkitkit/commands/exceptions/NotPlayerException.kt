@@ -1,6 +1,4 @@
 package tech.carcadex.kotlinbukkitkit.commands.exceptions
 
-import java.lang.RuntimeException
-
-class NotPlayerException : RuntimeException() {
+class NotPlayerException() : CommandExecuteException(messageTag = "#for-player-only") {
 }

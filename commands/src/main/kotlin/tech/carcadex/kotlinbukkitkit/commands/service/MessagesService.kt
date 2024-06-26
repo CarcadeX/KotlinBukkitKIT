@@ -3,7 +3,7 @@ package tech.carcadex.kotlinbukkitkit.commands.service
 import org.bukkit.ChatColor
 import org.bukkit.command.CommandSender
 
-object MessagesService {
+class MessagesService {
     private val messages = mutableMapOf<String, (CommandSender) -> Unit>()
 
     init {
@@ -15,7 +15,9 @@ object MessagesService {
         messages["#no-such-enum"] = { it.sendMessage("${ChatColor.RED}No such value for this enum was found") }
         messages["#not-a-number"] = { it.sendMessage("${ChatColor.RED}It is not a number") }
         messages["#wrong-usage"] = { it.sendMessage("${ChatColor.RED}Wrong usage of command") }
+        messages["#unknown-error"] = { it.sendMessage("${ChatColor.RED}Something went wrong") }
         messages["#no-perm"] = { it.sendMessage("${ChatColor.RED}You have not permissions for this command!") }
+        messages["#empty"] = { }
     }
 
     fun register(tag: String, func: (CommandSender) -> Unit) {

@@ -5,21 +5,20 @@ import tech.carcadex.kotlinbukkitkit.commands.dsl.Command
 import tech.carcadex.kotlinbukkitkit.commands.dsl.CommandContext
 import tech.carcadex.kotlinbukkitkit.commands.dsl.ExecutorContext
 import tech.carcadex.kotlinbukkitkit.commands.exceptions.ArgumentNotFoundException
-import tech.carcadex.kotlinbukkitkit.commands.service.MessagesService
-import tech.carcadex.kotlinbukkitkit.commands.service.TabCompleteService
+import tech.carcadex.kotlinbukkitkit.commands.exceptions.CommandExecuteException
 
 class CommandLeaf(
     override val context: CommandContext,
     private val executor: (ExecutorContext.() -> Unit),
-    completeTags: List<String> = emptyList()
+    private val completer: List<(CommandSender) -> List<String>>
 ) : Command {
-    private val completer = TabCompleteService.parseTags(completeTags)
     override fun execute(context: ExecutorContext) {
-        if(hasNotPermission(context.sender)) return
+        if(hasNotPermission(context.sender))
+            throw CommandExecuteException("#no-perm")
         try {
             executor(context)
         } catch (e: ArgumentNotFoundException) {
-            MessagesService.byTag("#wrong-usage")(context.sender)
+            throw CommandExecuteException("#wrong-usage")
         }
 
     }
