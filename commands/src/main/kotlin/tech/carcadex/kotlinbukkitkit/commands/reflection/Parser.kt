@@ -1,7 +1,7 @@
 package tech.carcadex.kotlinbukkitkit.commands.reflection
 
 import org.bukkit.command.CommandSender
-import tech.carcadex.kotlinbukkitkit.commands.exceptions.TypeParseException
+import tech.carcadex.kotlinbukkitkit.commands.exceptions.CommandExecuteException
 import tech.carcadex.kotlinbukkitkit.commands.exceptions.UnsupportedTypeException
 import tech.carcadex.kotlinbukkitkit.commands.reflection.annotations.*
 import tech.carcadex.kotlinbukkitkit.commands.service.MessagesService
@@ -59,19 +59,17 @@ object Parser {
                     try {
                         TypeService.byType(argType.type)(context)
                     } catch (e: Throwable) {
-                        if (context.errorMessage != null) MessagesService.byTag(context.errorMessage!!)(sender)
-                        throw TypeParseException()
+                        throw CommandExecuteException(context.errorMessage ?: "#empty")
                     }
                 }
             } else if (!clazz.isEnum) throw UnsupportedTypeException("Type ${argType.type.javaType.typeName} is not supported")
             else {
-                enums[argIndex] = { it, sender ->
+                enums[argIndex] = { it, _ ->
                     var res: Enum<*>? = null;
                     for (e in clazz.enumConstants) {
                         if ((e as Enum<*>).name.equals(it, ignoreCase = true)) res = e;
                     }
-                    if (res == null) MessagesService.byTag("#no-such-enum")(sender)
-                    res ?: throw TypeParseException()
+                    res ?: throw CommandExecuteException("#no-such-enum")
                 }
                 argsParsers.add { _, _ -> {} }
             }
@@ -102,8 +100,6 @@ object Parser {
         instanceAtStart: Boolean = false,
         instance: Any = Any()
     ): MutableMap<KParameter, Any?> {
-        val tempArgs = if (cmd.isLastOptional && argsFromExecutor.size < argsSize) argsFromExecutor.copyOf(argsSize)
-        else argsFromExecutor
 
         val finalArgs = mutableListOf<Any?>()
         if(instanceAtStart) finalArgs.add(instance)
@@ -113,7 +109,7 @@ object Parser {
                 )
             )
             finalArgs.add(sender)
-        finalArgs.addAll(tempArgs.mapIndexed { i, it ->
+        finalArgs.addAll(argsFromExecutor.mapIndexed { i, it ->
             if (it == null) return@mapIndexed null
             argsParsers[i + 1](it, sender)
         })

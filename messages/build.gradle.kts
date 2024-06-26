@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     id("java")
     kotlin("jvm")
@@ -31,6 +33,7 @@ dependencies {
     implementation("net.kyori:adventure-api:4.14.0")
     implementation("net.kyori:adventure-platform-bukkit:4.3.0")
     implementation(files(parent!!.files("messages/libs/MiniMessages.jar"))) //using universal minimessages,
+    implementation(kotlin("stdlib-jdk8"))
 }
 
 tasks.test {
@@ -120,4 +123,12 @@ publishing {
 signing {
     useGpgCmd()
     sign(publishing.publications.getByName("maven"))
+}
+val compileKotlin: KotlinCompile by tasks
+compileKotlin.kotlinOptions {
+    jvmTarget = "1.8"
+}
+val compileTestKotlin: KotlinCompile by tasks
+compileTestKotlin.kotlinOptions {
+    jvmTarget = "1.8"
 }

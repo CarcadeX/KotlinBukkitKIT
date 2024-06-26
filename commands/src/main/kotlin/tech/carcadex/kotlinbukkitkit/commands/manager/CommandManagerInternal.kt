@@ -4,26 +4,26 @@ import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabCompleter
 import org.bukkit.plugin.Plugin
-import tech.carcadex.kotlinbukkitkit.commands.exceptions.NotPlayerException
 import tech.carcadex.kotlinbukkitkit.commands.reflection.CommandParams
 import tech.carcadex.kotlinbukkitkit.commands.reflection.Parser
 import tech.carcadex.kotlinbukkitkit.commands.reflection.Parser.paramsFromAnnotations
 import tech.carcadex.kotlinbukkitkit.commands.reflection.annotations.Command
-import tech.carcadex.kotlinbukkitkit.commands.exceptions.TypeParseException
+import tech.carcadex.kotlinbukkitkit.commands.exceptions.CommandExecuteException
 import tech.carcadex.kotlinbukkitkit.commands.register.CommandRegister
 import tech.carcadex.kotlinbukkitkit.commands.service.MessagesService
 import tech.carcadex.kotlinbukkitkit.commands.reflection.service.SubCommandsService
 import tech.carcadex.kotlinbukkitkit.commands.service.TabCompleteService
 import kotlin.reflect.KFunction
 import kotlin.reflect.full.createType
+import kotlin.reflect.full.findAnnotations
 import kotlin.reflect.full.hasAnnotation
 import kotlin.reflect.full.isSubtypeOf
 import kotlin.reflect.jvm.javaType
 
-
-
-class CommandManagerImpl(private val plugin: Plugin) : CommandManager {
-
+class CommandManagerInternal(private val plugin: Plugin) : CommandManager {
+    val messagesService = MessagesService()
+    val tabCompleteService = TabCompleteService()
+    private val subCommandsService = SubCommandsService(messagesService, tabCompleteService)
     private fun register(
         commandExecutor: CommandExecutor, commandParams: CommandParams, tabCompleter: TabCompleter =
             TabCompleter { _, _, _, _ -> mutableListOf() }
@@ -39,10 +39,10 @@ class CommandManagerImpl(private val plugin: Plugin) : CommandManager {
     }
 
     override fun register(commandClass: Any) {
-        if(commandClass::class.objectInstance == null) {
-            throw IllegalArgumentException("commandClass is not a object!")
+        if((commandClass::class.findAnnotations(Command::class).isEmpty())) {
+            throw IllegalArgumentException("commandClass has not contains Command annotation!")
         }
-        val (name, subs) = SubCommandsService.registerRootCommand(commandClass)
+        val (name, subs) = subCommandsService.registerRootCommand(commandClass)
         val subsNames = mutableListOf<String>()
         subs.forEach {
             subsNames.addAll(it.context.aliases)
@@ -50,10 +50,10 @@ class CommandManagerImpl(private val plugin: Plugin) : CommandManager {
         val context = paramsFromAnnotations(commandClass::class)
         register(CommandExecutor { sender, _, _, args ->
             if (context.perm != null && !sender.hasPermission(context.perm)) {
-                MessagesService.byTag("#no-perm")(sender)
+                messagesService.byTag("#no-perm")(sender)
                 return@CommandExecutor true
             }
-            SubCommandsService.handleCommand(name, sender, args);
+            subCommandsService.handleCommand(name, sender, args);
             true
         },
             context,
@@ -87,19 +87,19 @@ class CommandManagerImpl(private val plugin: Plugin) : CommandManager {
 
             register(CommandExecutor { sender, _, _, argsFromExecutor ->
                 if (cmd.perm != null && !sender.hasPermission(cmd.perm)) {
-                    MessagesService.byTag("#no-perm")(sender)
+                    messagesService.byTag("#no-perm")(sender)
                     return@CommandExecutor true
                 }
                 try {
                     func.callBy(
-
                         Parser.paramMap(cmd, argsFromExecutor, argsSize, sender, argsParsers, func)
-
                     )
-                } catch (ignored: TypeParseException) {
-                } catch (ignored: NotPlayerException) {
+                } catch (e: CommandExecuteException) {
+                    messagesService.byTag(e.messageTag)(sender)
                 } catch (e: IllegalArgumentException) {
-                    MessagesService.byTag("#wrong-usage")(sender)
+                    messagesService.byTag("#wrong-usage")(sender)
+                } catch (e: Throwable) {
+                    messagesService.byTag("#unknown-error")(sender)
                 }
 
                 return@CommandExecutor true
@@ -107,20 +107,21 @@ class CommandManagerImpl(private val plugin: Plugin) : CommandManager {
             },
                 cmd,
                 cmd.completeTags.let {
-                    TabCompleteService.completerReflection(it.toMutableList(),
+                    tabCompleteService.completerReflection(it.toMutableList(),
                         func.parameters.map { it.type.javaType as Class<*> })
                 }
-                    ?: TabCompleter { _, _, _, _ -> mutableListOf() }
             )
         } else throw IllegalArgumentException("It must be a command!")
     }
 
     override fun tabComplete(tag: String, func: (CommandSender) -> List<String>) {
-        TabCompleteService.register(tag, func)
+        tabCompleteService.register(tag, func)
     }
 
 
     override fun message(tag: String, func: (CommandSender) -> Unit) {
-        MessagesService.register(tag, func)
+        messagesService.register(tag, func)
     }
+
+    override fun readMessage(tag: String): (CommandSender) -> Unit = messagesService.byTag(tag)
 }

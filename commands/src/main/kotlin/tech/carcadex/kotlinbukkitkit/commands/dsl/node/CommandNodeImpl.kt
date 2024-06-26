@@ -5,13 +5,15 @@ import tech.carcadex.kotlinbukkitkit.commands.dsl.Command
 import tech.carcadex.kotlinbukkitkit.commands.dsl.CommandContext
 import tech.carcadex.kotlinbukkitkit.commands.dsl.CommandNode
 import tech.carcadex.kotlinbukkitkit.commands.dsl.ExecutorContext
+import tech.carcadex.kotlinbukkitkit.commands.exceptions.CommandExecuteException
 import tech.carcadex.kotlinbukkitkit.commands.service.MessagesService
 
 class CommandNodeImpl(
     override val context: CommandContext,
-    private val subs: MutableMap<String, Command> = mutableMapOf()
+    private val subs: MutableMap<String, Command> = mutableMapOf(),
+    private val default: Command? = null
 ) : CommandNode {
-    private var default: Command? = null
+
     override fun execute(context: ExecutorContext) {
         if(hasNotPermission(context.sender)) return
         if(context.args.isNotEmpty() && context.args[0].lowercase() in subs) subs[context.args[0].lowercase()]?.execute(
@@ -19,7 +21,7 @@ class CommandNodeImpl(
         else {
             if(default != null) {
                 default!!.execute(ExecutorContext(context.sender, context.args))
-            } else MessagesService.byTag("#wrong-usage")(context.sender)
+            } else throw CommandExecuteException("#wrong-usage")
         }
     }
 

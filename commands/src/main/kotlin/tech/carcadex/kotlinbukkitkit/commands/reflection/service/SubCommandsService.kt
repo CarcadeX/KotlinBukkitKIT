@@ -9,12 +9,12 @@ import tech.carcadex.kotlinbukkitkit.commands.reflection.CommandParams
 import tech.carcadex.kotlinbukkitkit.commands.reflection.Parser
 import tech.carcadex.kotlinbukkitkit.commands.reflection.annotations.Command
 import tech.carcadex.kotlinbukkitkit.commands.reflection.annotations.Default
-import tech.carcadex.kotlinbukkitkit.commands.exceptions.TypeParseException
+import tech.carcadex.kotlinbukkitkit.commands.exceptions.CommandExecuteException
 import kotlin.reflect.KFunction
 import kotlin.reflect.full.*
 import kotlin.reflect.jvm.javaType
 
-object SubCommandsService {
+class SubCommandsService(private val messagesService: MessagesService, private val tabCompleteService: TabCompleteService) {
     data class SubCommand(val name: String, val context: CommandParams,
                           val executor: (sender: CommandSender, args: Array<String>) -> Boolean, val tabCompleter: TabCompleter)
 
@@ -44,7 +44,7 @@ object SubCommandsService {
             if(args.isNotEmpty()) for(sub in subs[rootCommand.lowercase()]!!) {
                 if(sub.name == args[0]) {
                     if (sub.context.perm != null && sub.context.perm != "" && !sender.hasPermission(sub.context.perm)) {
-                        MessagesService.byTag("#no-perm")(sender)
+                        messagesService.byTag("#no-perm")(sender)
                         return
                     }
                     sub.executor(sender, args.copyOfRange(1, args.size))
@@ -70,18 +70,18 @@ object SubCommandsService {
         }
         val executor: (sender: CommandSender, args: Array<String>) -> Boolean = { sender, argsFromExecutor ->
             if (context.perm != null && !sender.hasPermission(context.perm)) {
-                MessagesService.byTag("#no-perm")(sender)
+                messagesService.byTag("#no-perm")(sender)
                 true
             } else {
                 try {
                     func.callBy(Parser.paramMap(context, argsFromExecutor, argsSize, sender, argsParsers, func, true, rootCommand))
                     true
-                } catch (ignored: TypeParseException) {
+                } catch (ignored: CommandExecuteException) {
                     false
                 } catch (ignored: NotPlayerException) {
                     false
                 } catch (e: IllegalArgumentException) {
-                    MessagesService.byTag("#wrong-usage")(sender)
+                    messagesService.byTag("#wrong-usage")(sender)
                     false
                 }
 
@@ -89,7 +89,7 @@ object SubCommandsService {
         }
 
         return SubCommand(name, context, executor, context.completeTags.let {
-            TabCompleteService.completerReflection(it.toMutableList(),
+            tabCompleteService.completerReflection(it.toMutableList(),
                 func.parameters.map { it.type.javaType as Class<*> })
         }
             ?: TabCompleter { _, _, _, _ -> mutableListOf() })

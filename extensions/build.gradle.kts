@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     id("java")
     kotlin("jvm")
@@ -21,6 +23,7 @@ repositories {
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT")
     api(project(":architecture"))
+    implementation(kotlin("stdlib-jdk8"))
 }
 
 tasks.test {
@@ -110,4 +113,12 @@ publishing {
 signing {
     useGpgCmd()
     sign(publishing.publications.getByName("maven"))
+}
+val compileKotlin: KotlinCompile by tasks
+compileKotlin.kotlinOptions {
+    jvmTarget = "1.8"
+}
+val compileTestKotlin: KotlinCompile by tasks
+compileTestKotlin.kotlinOptions {
+    jvmTarget = "1.8"
 }
