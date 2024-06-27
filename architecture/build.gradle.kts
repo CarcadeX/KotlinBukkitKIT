@@ -4,6 +4,7 @@ plugins {
     id("java")
     kotlin("jvm")
     id("com.github.johnrengelman.shadow") version "7.1.2"
+
     id("maven-publish")
     id("signing")
 }
@@ -101,17 +102,19 @@ publishing {
             val snapshotsRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
             url = uri(if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl)
             credentials {
-                username = "itzRedTea"
-                password = project.findProperty("password").toString()
+                username = project.findProperty("ossrhUsername").toString()
+                password = project.findProperty("ossrhPassword").toString()
             }
         }
 
     }
 }
 
+
+
 signing {
     useGpgCmd()
-    sign(publishing.publications.getByName("maven"))
+    sign(publishing.publications.asMap.values.first())
 }
 val compileKotlin: KotlinCompile by tasks
 compileKotlin.kotlinOptions {
