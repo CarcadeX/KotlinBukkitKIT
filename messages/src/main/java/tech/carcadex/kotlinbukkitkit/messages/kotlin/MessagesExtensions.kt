@@ -23,8 +23,8 @@ class MessagesBuilder(var legacy: Boolean = false,
     fun build(): Messages {
         if(plugin == null) throw RuntimeException("Missed plugin")
         return if(file == null) {
-            return (if(legacy) Messages.legacy(fileName ?: "messages.yml", plugin!!) else Messages.of(fileName ?: "messages.yml", plugin!!)).also { m -> verifier?.let { m.verifier(it) } }
-        } else return (if(legacy) Messages.legacy(file!!, plugin!!) else Messages.of(file!!, plugin!!)).also { m -> verifier?.let { m.verifier(it) } }
+            (if(legacy) Messages.legacy(fileName ?: "messages.yml", plugin!!) else Messages.of(fileName ?: "messages.yml", plugin!!)).also { m -> verifier?.let { m.verifier(it) } }
+        } else (if(legacy) Messages.legacy(file!!, plugin!!) else Messages.of(file!!, plugin!!)).also { m -> verifier?.let { m.verifier(it) } }
     }
 }
 
