@@ -10,8 +10,8 @@ plugins {
 }
 
 group = "tech.carcadex"
-val globalArtifactId = "kotlinbukkitkit-thirdparty"
-val globalName = "kotlinbukkitkit-thirdparty"
+val globalArtifactId = "kbk-thirdparty"
+val globalName = "kbk-thirdparty"
 
 repositories {
     mavenCentral()

@@ -10,8 +10,8 @@ plugins {
 }
 
 group = "tech.carcadex"
-val globalArtifactId = "kotlinbukkitkit-architecture"
-val globalName = "kotlinbukkitkit-architecture"
+val globalArtifactId = "kbk-architecture"
+val globalName = "kbk-architecture"
 
 repositories {
     mavenCentral()

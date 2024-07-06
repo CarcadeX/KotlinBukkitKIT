@@ -9,8 +9,8 @@ plugins {
 }
 
 group = "tech.carcadex"
-val globalArtifactId = "kotlinbukkitkit-commands"
-val globalName = "kotlinbukkitkit-commands"
+val globalArtifactId = "kbk-commands"
+val globalName = "kbk-commands"
 
 repositories {
     mavenCentral()

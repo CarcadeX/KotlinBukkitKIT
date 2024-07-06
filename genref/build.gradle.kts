@@ -9,8 +9,8 @@ plugins {
 }
 
 group = "tech.carcadex"
-val globalArtifactId = "kotlinbukkitkit-genref"
-val globalName = "kotlinbukkitkit-genref"
+val globalArtifactId = "kbk-genref"
+val globalName = "kbk-genref"
 
 repositories {
     mavenCentral()

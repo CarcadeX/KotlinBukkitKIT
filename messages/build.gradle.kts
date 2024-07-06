@@ -8,8 +8,8 @@ plugins {
 }
 
 group = "tech.carcadex"
-val globalArtifactId = "kotlinbukkitkit-messages"
-val globalName = "kotlinbukkitkit-messages"
+val globalArtifactId = "kbk-messages"
+val globalName = "kbk-messages"
 
 repositories {
     mavenCentral()

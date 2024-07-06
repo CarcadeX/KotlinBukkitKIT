@@ -10,8 +10,8 @@ plugins {
 }
 
 group = "tech.carcadex"
-val globalArtifactId = "kotlinbukkitkit-menu"
-val globalName = "kotlinbukkitkit-menu"
+val globalArtifactId = "kbk-menu"
+val globalName = "kbk-menu"
 
 repositories {
     mavenCentral()

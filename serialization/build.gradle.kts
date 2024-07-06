@@ -10,8 +10,8 @@ plugins {
 }
 
 group = "tech.carcadex"
-val globalArtifactId = "kotlinbukkitkit-serialization"
-val globalName = "kotlinbukkitkit-serialization"
+val globalArtifactId = "kbk-serialization"
+val globalName = "kbk-serialization"
 
 repositories {
     mavenCentral()
